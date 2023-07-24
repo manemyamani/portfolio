@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        .calculator {
+            border-radius: 10px;
+            background-color: #344D67;
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .calculator button {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+        }
+        .calculator input {
+            width: 96%;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="padding-left: 40%;">
+    <div class="calculator" align="center">
+        <input type="text" id="result" readonly>
+        <button onclick="append(7)">7</button>
+        <button onclick="append(8)">8</button>
+        <button onclick="append(9)">9</button>
+        <br>
+        <button onclick="append(4)">4</button>
+        <button onclick="append(5)">5</button>
+        <button onclick="append(6)">6</button>
+        <br>
+        <button onclick="append(1)">1</button>
+        <button onclick="append(2)">2</button>
+        <button onclick="append(3)">3</button>
+        <br>
+        <button onclick="append('.')">.</button>
+        <button onclick="append(0)">0</button>
+        <button onclick="clearResult()">C</button>
+        <br>
+        <button onclick="perform('+')">+</button>
+        <button onclick="perform('-')">-</button>
+        <button onclick="perform('*')">*</button>
+        <button onclick="perform('/')">/</button>
+        <button onclick="calculate()">=</button>
+    </div>
+
+    <script>
+        let result = document.getElementById('result');
+
+        function append(value) {
+            result.value += value;
+        }
+
+        function clearResult() {
+            result.value = '';
+        }
+
+        function perform(operator) {
+            result.value += operator;
+        }
+
+        function calculate() {
+            let expression = result.value;
+            if (expression) {
+                try {
+                    result.value = eval(expression);
+                } catch (error) {
+                    result.value = '';
+                    let errorMessage = document.createElement('p');
+                    errorMessage.classList.add('error');
+                    errorMessage.innerText = 'Invalid Calculation';
+                    document.body.appendChild(errorMessage);
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
